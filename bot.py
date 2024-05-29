@@ -63,7 +63,7 @@ async def register_first_name(message:Message, state:FSMContext):
 @dp.message(Register.first_name)
 async def register_first_name_del(message:Message, state:FSMContext):
     await message.answer(text= "Ismimgizni to'g'ri kiriting!")
-    await message.delete
+    await message.delete()
 
 #last name
 @dp.message(F.text, Register.last_name)
@@ -131,7 +131,7 @@ async def register_email(message:Message, state:FSMContext):
         text = f"Salom {full_name}, Nima xizmat"
     await message.answer(text,reply_markup =main_button)
 
-@dp.message(Register.region)
+@dp.message(Register.phone_number)
 async def register_region_del(message:Message, state:FSMContext):
     await message.answer(text= "☎️ Telefon raqamni kiriting")
     await message.delete()
@@ -238,12 +238,15 @@ async def start_command(message:Message):
 #help commands
 @dp.message(Command("help"))
 async def help_commands(message:Message):
+    text = message.text
     await message.answer("Sizga qanday yordam kerak")
+    await bot.send_message(chat_id=ADMINS[0], text=text)
+
     
 #about commands
 @dp.message(Command("about"))
 async def about_commands(message:Message):
-    await message.answer("Sifat 2024")
+    await message.answer("Bot orqali siz Telefon va Kampyuterlarni olnile sotib olishingiz mumkin")
 
 
 @dp.message(Command("admin"),IsBotAdminFilter(ADMINS))
